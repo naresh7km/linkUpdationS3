@@ -17,7 +17,7 @@ const port = process.env.PORT || 3000;
 // CONFIGURATION
 const REGION = process.env.AWS_REGION || "ap-northeast-1";
 const ACCOUNT_ID = "654654618464";
-const BUCKET_NAME = "rockypops-654654618464-ap-northeast-1-an";
+const BUCKET_NAME = process.env.BUCKET_NAME;
 
 // Redis keys — shared contract with the consumer server
 const KEY_UNUSED = "aps:unused"; // List of unused AP names
