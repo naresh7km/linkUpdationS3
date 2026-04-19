@@ -61,7 +61,7 @@ async function resetAndCreateNewBatch() {
     statusMessage = `Step 2: Creating 20 fresh Access Points...`;
     const newAPs = [];
 
-    for (let i = 1; i <= 100; i++) {
+    for (let i = 1; i <= 20; i++) {
       const name = `ap-${uuidv4().split("-")[0]}-${i}`;
       await s3Control.send(
         new CreateAccessPointCommand({
