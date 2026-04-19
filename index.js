@@ -130,7 +130,7 @@ async function generatePresignedUrl(apName) {
     Bucket: apArn,
     Key: "index.html",
   });
-  return await getSignedUrl(s3Client, command, { expiresIn: 86400 });
+  return await getSignedUrl(s3Client, command, { expiresIn: 432000 });
 }
 
 // --- ROUTES ---
