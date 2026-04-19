@@ -58,10 +58,10 @@ async function resetAndCreateNewBatch() {
       );
     }
 
-    statusMessage = `Step 2: Creating 20 fresh Access Points...`;
+    statusMessage = `Step 2: Creating 100 fresh Access Points...`;
     const newAPs = [];
 
-    for (let i = 1; i <= 20; i++) {
+    for (let i = 1; i <= 100; i++) {
       const name = `ap-${uuidv4().split("-")[0]}-${i}`;
       await s3Control.send(
         new CreateAccessPointCommand({
@@ -83,7 +83,7 @@ async function resetAndCreateNewBatch() {
       .rPush(KEY_UNUSED, newAPs)
       .exec();
 
-    statusMessage = "Success! Old APs cleared and 20 fresh ones created.";
+    statusMessage = "Success! Old APs cleared and 100 fresh ones created.";
   } catch (err) {
     console.error("Batch Error:", err);
     statusMessage = "Error during reset: " + err.message;
@@ -130,7 +130,7 @@ async function generatePresignedUrl(apName) {
     Bucket: apArn,
     Key: "index.html",
   });
-  return await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+  return await getSignedUrl(s3Client, command, { expiresIn: 86400 });
 }
 
 // --- ROUTES ---
@@ -179,7 +179,7 @@ app.get("/", async (req, res) => {
                     </form>
 
                     <form action="/create-fresh" method="POST" style="flex: 1">
-                        <button type="submit" class="btn-create" onclick="return confirm('Wipe all existing APs and create 20 new ones?')">Create Fresh APs</button>
+                        <button type="submit" class="btn-create" onclick="return confirm('Wipe all existing APs and create 100 new ones?')">Create Fresh APs</button>
                     </form>
                 </div>
 
@@ -208,7 +208,7 @@ app.post("/next-user", async (req, res) => {
     statusMessage = `Switched to AP: ${nextAP}`;
   } else {
     await redis.set(KEY_CURRENT_URL, "QUEUE EMPTY");
-    statusMessage = "All 20 APs used. Please click 'Create Fresh APs'.";
+    statusMessage = "All 100 APs used. Please click 'Create Fresh APs'.";
   }
   res.redirect("/");
 });
